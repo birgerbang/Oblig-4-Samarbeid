@@ -211,4 +211,10 @@ public class Lenkeliste<T> implements Liste<T> {
         }
         return streng;
     }
+
+    @Override
+    public Iterator<T> iterator() {
+        Iterator<T> iter = new LenkelisteIterator(lenkeliste);
+        return iter;
+    }
 }
