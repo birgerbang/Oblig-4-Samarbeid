@@ -13,9 +13,6 @@ public class Lenkeliste<T> implements Liste<T> {
             return data.toString();
         }
     }
-    /**
-     * Gjor listen itererbar
-     */
     class LenkelisteIterator implements Iterator<T>{
         Node peker;
         LenkelisteIterator (Lenkeliste<T> lenkelisten) {
@@ -37,6 +34,9 @@ public class Lenkeliste<T> implements Liste<T> {
             return peker.data;
         }
     }
+    /**
+     * Gjor listen itererbar
+     */
     @Override
     public Iterator<T> iterator() {
         return new LenkelisteIterator(this);
