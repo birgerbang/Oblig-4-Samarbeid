@@ -13,6 +13,9 @@ public class Lenkeliste<T> implements Liste<T> {
             return data.toString();
         }
     }
+    /**
+     * Gjor listen itererbar
+     */
     class LenkelisteIterator implements Iterator<T>{
         Node peker;
         LenkelisteIterator (Lenkeliste<T> lenkelisten) {
@@ -34,6 +37,10 @@ public class Lenkeliste<T> implements Liste<T> {
             return peker.data;
         }
     }
+    @Override
+    public Iterator<T> iterator() {
+        return new LenkelisteIterator(this);
+    }
 
     protected Node forsteNode = null;
     protected Node sisteNode = null;
@@ -46,7 +53,9 @@ public class Lenkeliste<T> implements Liste<T> {
         return forsteNode == null;
     }
     
-    // Legger til element på slutten av listen
+    /** 
+     * Legger til element på slutten av listen
+    */
     @Override
     public void leggTil(T x){
         Node nyNode = new Node(x);
@@ -238,10 +247,5 @@ public class Lenkeliste<T> implements Liste<T> {
             }
         }
         return streng;
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return new LenkelisteIterator<>(this);
     }
 }
