@@ -1,6 +1,8 @@
+import java.util.Iterator;
+
 public class Lenkeliste<T> implements Liste<T> {
     protected int antall = 0;
-    class Node {
+    public class Node {
         Node neste = null;
         T data;
         Node (T x) {
@@ -11,8 +13,34 @@ public class Lenkeliste<T> implements Liste<T> {
             return data.toString();
         }
     }
+    class LenkelisteIterator implements Iterator<T>{
+        Node peker;
+        LenkelisteIterator (Lenkeliste<T> lenkelisten) {
+            peker = lenkelisten.forsteNode;
+        }
+        public boolean hasNext(){
+            if (peker == null){
+                return false;
+            }
+            if (peker.neste == null){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+        public T next(){
+            peker = peker.neste;
+            return peker.data;
+        }
+    }
+
     protected Node forsteNode = null;
     protected Node sisteNode = null;
+
+    public Node giForste(){
+        return forsteNode;
+    }
 
     public boolean erTom(){
         return forsteNode == null;
@@ -214,7 +242,6 @@ public class Lenkeliste<T> implements Liste<T> {
 
     @Override
     public Iterator<T> iterator() {
-        Iterator<T> iter = new LenkelisteIterator(lenkeliste);
-        return iter;
+        return new LenkelisteIterator<>(this);
     }
 }
