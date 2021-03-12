@@ -26,20 +26,37 @@ public class Lege implements Comparable<Lege> {
     
     public HvitResept skrivHvitResept(Legemiddel legemiddel, Pasient pasient, int reit) throws UlovligUtskrift{
         if (legemiddel instanceof Narkotisk){
-            throw UlovligUtskrift(this.Lege, legemiddel);
+            throw new UlovligUtskrift(this, legemiddel);
         }
-        return new HvitResept(legemiddel, pasient, reit);
+        HvitResept nyHvitResept = new HvitResept(legemiddel, pasient, reit);
+        utskrevedeResepter.leggTil(nyHvitResept);
+        return nyHvitResept;
     }
 
     public MilitaerResept skrivMilitaerResept(Legemiddel legemiddel, Pasient pasient, int reit) throws UlovligUtskrift{
-        return new MilitaerResept(legemiddel, pasient, reit);
+        if (legemiddel instanceof Narkotisk){
+            throw new UlovligUtskrift(this, legemiddel);
+        }
+        MilitaerResept nyMilitaerResept = new MilitaerResept(legemiddel, pasient, reit);
+        utskrevedeResepter.leggTil(nyMilitaerResept);
+        return nyMilitaerResept;
     }
 
     public PResept skrivPResept(Legemiddel legemiddel, Pasient pasient) throws UlovligUtskrift{
-        return new PResept(legemiddel, pasient);
+        if (legemiddel instanceof Narkotisk){
+            throw new UlovligUtskrift(this, legemiddel);
+        }
+        PResept nyPResept = new PResept(legemiddel, pasient);
+        utskrevedeResepter.leggTil(nyPResept);
+        return nyPResept;
     }
 
     public BlaaResept skrivBlaaResept(Legemiddel legemiddel, Pasient pasient, int reit) throws UlovligUtskrift{
-        return new BlaaResept(legemiddel, pasient, reit);
+        if (legemiddel instanceof Narkotisk){
+            throw new UlovligUtskrift(this, legemiddel);
+        }
+        BlaaResept nyBlaaResept = new BlaaResept(legemiddel, pasient, reit);
+        utskrevedeResepter.leggTil(nyBlaaResept);
+        return nyBlaaResept;
     }
 }

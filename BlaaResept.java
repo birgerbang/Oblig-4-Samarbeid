@@ -5,7 +5,6 @@ public class BlaaResept extends Resept{
     }
 
     public BlaaResept(Legemiddel legemiddel, Pasient pasient, int reit){
-        System.out.println("Hei");
         super(legemiddel, pasient, reit);
     }
 

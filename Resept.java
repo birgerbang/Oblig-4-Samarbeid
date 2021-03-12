@@ -23,6 +23,21 @@ abstract public class Resept {
         id = teller;
     }
 
+    protected Resept(Legemiddel legemiddel, Pasient pasient, int reit){
+        this.legemiddel = legemiddel;
+        this.pasient = pasient;
+        this.reit = reit;
+        teller++;
+        id = teller;
+    }
+
+    protected Resept(Legemiddel legemiddel, Pasient pasient){
+        this.legemiddel = legemiddel;
+        this.pasient = pasient;
+        teller++;
+        id = teller;
+    }
+
     public int hentId(){
         return id;
     }
@@ -32,7 +47,7 @@ abstract public class Resept {
     }
 
     public String hentUstskrivendeLege(){
-        return utskrivendeLege.hentLegeNavn();
+        return utskrivendeLege.hentNavn();
     }
 
     public int hentPasientId(){
