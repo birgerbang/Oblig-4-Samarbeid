@@ -1,6 +1,12 @@
 public class BlaaResept extends Resept{
     public BlaaResept(Legemiddel legemiddel, Lege utskrivendeLege, Pasient pasient, int reit){
         super(legemiddel, utskrivendeLege, pasient, reit);
+        System.out.println("hei");
+    }
+
+    public BlaaResept(Legemiddel legemiddel, Pasient pasient, int reit){
+        System.out.println("Hei");
+        super(legemiddel, pasient, reit);
     }
 
     @Override
@@ -20,5 +26,4 @@ public class BlaaResept extends Resept{
         return ("Resept ID: " + hentId() + "\nLegemiddel: " + hentLegemiddel() + "\nLege som skrev ut denne resepten: " + hentUstskrivendeLege() + 
         "\nPasient ID: " + hentPasientId() + "\nReit: " + hentReit() + "\nResept farge: " + farge() + "\nPris å betale: " + prisAaBetale());
     }
-    
 }

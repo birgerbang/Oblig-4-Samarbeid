@@ -1,8 +1,9 @@
 public class PResept extends HvitResept{
     static int rabatt = 108;
-    int Preit = 3;
-    public PResept(Legemiddel legemiddel, Lege utskrivendeLege, Pasient pasient){
-        super(legemiddel, utskrivendeLege, pasient);
+    int PReit = 3;
+    
+    public PResept(Legemiddel legemiddel, Pasient pasient){
+        super(legemiddel, pasient);
     }
 
     @Override
@@ -17,10 +18,10 @@ public class PResept extends HvitResept{
 
     @Override
     public boolean bruk(){
-        if (Preit <= 0){
+        if (PReit <= 0){
             return false;
         } else {
-            Preit -= 1;
+            PReit -= 1;
             return true;
         }
     }

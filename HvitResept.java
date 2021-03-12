@@ -3,8 +3,12 @@ public class HvitResept extends Resept {
         super(legemiddel, utskrivendeLege, pasient, reit);
     }
 
-    public HvitResept(Legemiddel legemiddel, Lege utskrivendeLege, Pasient pasient){
-        super(legemiddel, utskrivendeLege, pasient);
+    public HvitResept(Legemiddel legemiddel, Pasient pasient){
+        super(legemiddel, pasient);
+    }
+
+    public HvitResept(Legemiddel legemiddel, Pasient pasient, int reit){
+        super(legemiddel, pasient, reit);
     }
 
     @Override
