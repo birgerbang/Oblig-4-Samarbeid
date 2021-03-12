@@ -14,9 +14,10 @@ public class Lenkeliste<T> implements Liste<T> {
         }
     }
     class LenkelisteIterator implements Iterator<T>{
-        Node peker;
+        T x;
+        Node peker = new Node(x);
         LenkelisteIterator (Lenkeliste<T> lenkelisten) {
-            peker = lenkelisten.forsteNode;
+            peker.neste = lenkelisten.forsteNode;
         }
         public boolean hasNext(){
             if (peker == null){

@@ -12,6 +12,3 @@ interface Liste<T> extends Iterable<T> {
 
     public Iterator<T> iterator();
 }
-/**
- * Om jeg endrer noe her, kommer det opp?
- */
