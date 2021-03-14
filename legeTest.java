@@ -6,7 +6,7 @@ public class legeTest {
     public static void kjorTest() throws UlovligUtskrift{
         Lege heidi = new Lege("Heidi");
         Lege ina = new Lege("Ina");
-        Lege fredrik = new Lege("Fredrik");
+        Spesialist fredrik = new Spesialist("Fredrik", "593");
         Pasient john = new Pasient("John", "11080829974");
         Narkotisk oxicotin = new Narkotisk("Oxicotin", 200, 12.5, 20);
         Vanlig prevasjonstabletter = new Vanlig("prevasjonstabletter", 200, 20);
@@ -18,6 +18,8 @@ public class legeTest {
         }
 
         ina.skrivPResept(prevasjonstabletter, john);
+        fredrik.skrivBlaaResept(oxicotin, john, 10);
+
         
         System.out.println(heidi.compareTo(ina));
         System.out.println(heidi.compareTo(fredrik));

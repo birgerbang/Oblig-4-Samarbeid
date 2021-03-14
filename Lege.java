@@ -28,7 +28,7 @@ public class Lege implements Comparable<Lege> {
         if (legemiddel instanceof Narkotisk){
             throw new UlovligUtskrift(this, legemiddel);
         }
-        HvitResept nyHvitResept = new HvitResept(legemiddel, pasient, reit);
+        HvitResept nyHvitResept = new HvitResept(legemiddel, this, pasient, reit);
         utskrevedeResepter.leggTil(nyHvitResept);
         return nyHvitResept;
     }
@@ -37,7 +37,7 @@ public class Lege implements Comparable<Lege> {
         if (legemiddel instanceof Narkotisk){
             throw new UlovligUtskrift(this, legemiddel);
         }
-        MilitaerResept nyMilitaerResept = new MilitaerResept(legemiddel, pasient, reit);
+        MilitaerResept nyMilitaerResept = new MilitaerResept(legemiddel, this, pasient, reit);
         utskrevedeResepter.leggTil(nyMilitaerResept);
         return nyMilitaerResept;
     }
@@ -46,7 +46,7 @@ public class Lege implements Comparable<Lege> {
         if (legemiddel instanceof Narkotisk){
             throw new UlovligUtskrift(this, legemiddel);
         }
-        PResept nyPResept = new PResept(legemiddel, pasient);
+        PResept nyPResept = new PResept(legemiddel, this, pasient);
         utskrevedeResepter.leggTil(nyPResept);
         return nyPResept;
     }
@@ -55,7 +55,7 @@ public class Lege implements Comparable<Lege> {
         if (legemiddel instanceof Narkotisk){
             throw new UlovligUtskrift(this, legemiddel);
         }
-        BlaaResept nyBlaaResept = new BlaaResept(legemiddel, pasient, reit);
+        BlaaResept nyBlaaResept = new BlaaResept(legemiddel, this, pasient, reit);
         utskrevedeResepter.leggTil(nyBlaaResept);
         return nyBlaaResept;
     }

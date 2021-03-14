@@ -22,7 +22,7 @@ abstract public class Resept {
         teller++;
         id = teller;
     }
-
+/*
     protected Resept(Legemiddel legemiddel, Pasient pasient, int reit){
         this.legemiddel = legemiddel;
         this.pasient = pasient;
@@ -30,7 +30,7 @@ abstract public class Resept {
         teller++;
         id = teller;
     }
-
+*/
     protected Resept(Legemiddel legemiddel, Pasient pasient){
         this.legemiddel = legemiddel;
         this.pasient = pasient;

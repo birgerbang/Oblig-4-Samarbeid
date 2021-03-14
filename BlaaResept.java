@@ -2,11 +2,11 @@ public class BlaaResept extends Resept{
     public BlaaResept(Legemiddel legemiddel, Lege utskrivendeLege, Pasient pasient, int reit){
         super(legemiddel, utskrivendeLege, pasient, reit);
     }
-
+/*
     public BlaaResept(Legemiddel legemiddel, Pasient pasient, int reit){
         super(legemiddel, pasient, reit);
     }
-
+*/
     @Override
     public String farge(){
         return "Blå resept";
