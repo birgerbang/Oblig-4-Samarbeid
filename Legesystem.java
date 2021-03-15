@@ -13,7 +13,7 @@ public class Legesystem {
         Legesystem hovedsystem = new Legesystem();
         hovedsystem.hovedmeny();
     }
-    public void hovedmeny(){
+    public void hovedmeny() throws UlovligUtskrift{
         Scanner input = new Scanner(System.in);
         String n = null;
         System.out.println(" Velg 1 for aa skrive ut oversikt over pasienter, leger, legemidler og resepter. \n Velg 2 for aa opprette og legge til nye elementer i systemet \n velg 3 for aa bruke en gitt resept fra listen til en pasient \n velg 4 for aa skrive ut forskjellige former for statistikk \n velg 5 for aa skrive alle data til fil. \n press enter for aa avslutte.");
@@ -30,7 +30,8 @@ public class Legesystem {
             input.close();
         }
     }
-    public void leggTil(){
+
+    public void leggTil() throws UlovligUtskrift{
         Scanner inn = new Scanner(System.in);
         String p = null;
         System.out.println(" Velg 1 for aa legge til lege \n velg 2 for aa legge til pasient \n velg 3 for aa legge til resept \n velg 4 for aa legge til legemiddel. \n enter for aa gaa tilbake.");
@@ -61,16 +62,17 @@ public class Legesystem {
                                 }
                             }
                         }
-                    else if (p.equals("2")){
-                        System.out.println("Skriv inn legens navn: ");
-                        if (inn.hasNextLine()){
-                            Lege legen = new Lege(inn.nextLine());
-                            legeliste.leggTil(legen);
-                            System.out.println("Legen ble lagt til, press enter for aa gaa tilbake");
-                            if(inn.hasNextLine()){
-                                p = inn.nextLine();
-                                if(p.equals("")){
-                                    leggTil();
+                        else if (p.equals("2")){
+                            System.out.println("Skriv inn legens navn: ");
+                            if (inn.hasNextLine()){
+                                Lege legen = new Lege(inn.nextLine());
+                                legeliste.leggTil(legen);
+                                System.out.println("Legen ble lagt til, press enter for aa gaa tilbake");
+                                if(inn.hasNextLine()){
+                                    p = inn.nextLine();
+                                    if(p.equals("")){
+                                        leggTil();
+                                    }
                                 }
                             }
                         }
@@ -88,23 +90,274 @@ public class Legesystem {
                                     Pasient pasienten = new Pasient(navn, personnummer);
                                     pasientliste.leggTil(pasienten);
                                     System.out.println("Pasienten ble lagt til, press enter for aa gaa tilbake");
+                                    if(inn.hasNextLine()){
+                                        p = inn.nextLine();
+                                        if(p.equals("")){
+                                            leggTil();
+                                        }
+                                    }
+                                }
+                                else{
+                                    System.out.println("Feil! Husk at personnummeret skal ha 11 siffer. ");
+                                    System.out.println("Hva er pasientens personnummer? ");
+                                    if (inn.hasNextLine()){
+                                        personnummer = inn.nextLine();
+                                        if(personnummer.length()==11){
+                                            Pasient pasienten = new Pasient(navn, personnummer);
+                                            pasientliste.leggTil(pasienten);
+                                            System.out.println("Pasienten ble lagt til, press enter for aa gaa tilbake");
+                                            if(inn.hasNextLine()){
+                                                p = inn.nextLine();
+                                                if(p.equals("")){
+                                                    leggTil();
+                                                }
+                                            }
+                                        }
+                                        else{
+                                            System.out.println("Feil! Pasienten kunne ikke bli lagt til. Press enter for aa gaa tilbake ");
+                                            if(inn.hasNextLine()){
+                                                p = inn.nextLine();
+                                                if(p.equals("")){
+                                                    leggTil();
+                                                }
+                                                else{
+                                                    leggTil();
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
                 }
-                else if(p.equals("4")){
-                 
+                
+                else if(p.equals("3")){
+                    Lege legen = null;
+                    while(legen == null && p!=""){
+                        System.out.println("Hva er den utskrivende legens navn? : ");
+                        if (inn.hasNextLine()){
+                            String navn = inn.nextLine();
+                            if (navn!= null){
+                                legen = getLege(navn);
+                                if (legen != null){
+                                    break;
+                                }
+                                else{
+                                    System.out.println("Legen ble ikke funnet. har du skrevet feil? press enter for å gaa tilbake, [1] for å forsoke igjen");
+                                    if (inn.hasNextLine()){
+                                        p = inn.nextLine();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    Legemiddel legemiddelet = null;
+                    while(legemiddelet == null && p!=""){
+                        System.out.println("Hvilket legemiddel skal skrives ut? : ");
+                        if (inn.hasNextLine()){
+                            String navn = inn.nextLine();
+                            if (navn!= null){
+                                legemiddelet = getLegemiddel(navn);
+                                if (legemiddelet != null){
+                                    break;
+                                }
+                                else{
+                                    System.out.println("Legemiddelet ble ikke funnet. har du skrevet feil? \n press enter for å gaa tilbake og legge til legemiddel, [1] for å forsoke igjen");
+                                    if (inn.hasNextLine()){
+                                        p = inn.nextLine();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    Pasient pasienten = null;
+                    while(pasienten == null && p!=""){
+                        System.out.println("Pasientnummeret til pasienten? : ");
+                        if (inn.hasNextLine()){
+                            String nummer = inn.nextLine();
+                            if (nummer!= null){
+                                pasienten = getPasient(nummer);
+                                if (pasienten != null){
+                                    break;
+                                }
+                                else{
+                                    System.out.println("Pasienten ble ikke funnet. har du skrevet feil nummer? \n press enter for å gaa tilbake og legge til pasienten, [1] for å forsoke igjen");
+                                    if (inn.hasNextLine()){
+                                        p = inn.nextLine();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    String type = null;
+                    while(type == null && p!=""){
+                        System.out.println("Hvilken type skal resepten vaere?, [b] for blaa, [h] for hvit, [p] for PResept, [m] for militaer: ");
+                        if (inn.hasNextLine()){
+                            String input = inn.nextLine();
+                            if (input.equals("b")){
+                                type = input;
+                            }
+                            else if (input.equals("h")){
+                                type = input;
+                            }
+                            else if (input.equals("p")){
+                                type = input;
+                            }
+                            else if (input.equals("m")){
+                                type = input;
+                            }
+                            else{
+                                System.out.println("Dette er ikke en gyldig resepttype. Prov igjen. (eller press enter for aa gi opp)");
+                            }
+                        }
+                    }
+                    if (type.equals("p")){
+                        legen.skrivPResept(legemiddelet, pasienten);
+                        System.out.println("Resepten ble lagt til, press enter for aa gaa tilbake.");
+                        if (inn.hasNextLine()){
+                            p = inn.nextLine();
+                        }
+                    }
+                    else{
+                        int reit = 0;
+                        while(reit == 0 && p!=""){
+                            System.out.println("Hvor mange reit skal resepten ha? : ");
+                            if (inn.hasNextLine()){
+                                String nummer = inn.nextLine();
+                                if (nummer!= null){
+                                    try {
+                                        int numb = Integer.parseInt(nummer);
+                                        reit = numb;
+                                    }catch (NumberFormatException e) {
+                                        System.out.println("Dette er ikke et nummer. har du skrevet feil? feil nummer? \n press enter for å gi opp, eller [1] for å forsoke igjen");
+                                        if (inn.hasNextLine()){
+                                            p = inn.nextLine();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if(type.equals("h")){
+                            legen.skrivHvitResept(legemiddelet, pasienten, reit);
+                        }
+                        else if(type.equals("m")){
+                            legen.skrivMilitaerResept(legemiddelet, pasienten, reit);
+                        }
+                        else if(type.equals("b")){
+                            legen.skrivBlaaResept(legemiddelet, pasienten, reit);
+                        }
+                    }
                 }
                 else if(p.equals("4")){
-                    
+                    String typen = null;
+                    int pris = 0;
+                    double virkestoff = 0; 
+                    int styrke = -1;
+                    String navn = null;
+
+                    System.out.println("Hva er navnet på legemiddelet?: ");
+                    if(inn.hasNextLine()){
+                        navn = inn.nextLine();
+                    }
+                    while(typen == null && p!=""){
+                        System.out.println("Hva slags type legemiddel? [l] for vanlig, [v] for vanedannende eller [n] for narkotisk: ");
+                        if (inn.hasNextLine()){
+                            String inputs = inn.nextLine();
+                            if (inputs!= null){
+                                if (inputs.equals("l")){
+                                    typen = inputs;
+                                }
+                                else if (inputs.equals("v")){
+                                    typen = inputs;
+                                }
+                                else if (inputs.equals("n")){
+                                    typen = inputs;
+                                }
+                                else{
+                                    System.out.println("Dette er ikke et gyldig legemiddeltype. Prov igjen. (eller press enter for aa gi opp)");
+                                }
+                            }
+                        }
+                    }
+                    while(pris == 0 && p!=""){
+                        System.out.println("Hvor mye koster legemiddelet? : ");
+                        if (inn.hasNextLine()){
+                            String nummer = inn.nextLine();
+                            if (nummer!= null){
+                                try {
+                                    int numb = Integer.parseInt(nummer);
+                                    pris = numb;
+                                }catch (NumberFormatException e) {
+                                    System.out.println("Dette er ikke et nummer. har du skrevet feil? feil nummer? \n press enter for å gi opp, eller [1] for å forsoke igjen");
+                                    if (inn.hasNextLine()){
+                                        p = inn.nextLine();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    while(virkestoff==0 && p!=""){
+                        System.out.println("Hvor mye virkestoff er det i legemiddelet? : ");
+                        if (inn.hasNextLine()){
+                            String nummer = inn.nextLine();
+                            if (nummer!= null){
+                                try {
+                                    double numb = Double.parseDouble(nummer);
+                                    virkestoff = numb;
+                                }catch (NumberFormatException e) {
+                                    System.out.println("Dette er ikke et gyldig nummer. har du skrevet feil? feil nummer? \n press enter for å gi opp, eller [1] for å forsoke igjen");
+                                    if (inn.hasNextLine()){
+                                        p = inn.nextLine();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if(typen.equals("l")){
+                        Vanlig vanlige = new Vanlig(navn, pris, virkestoff);
+                        legemiddelliste.leggTil(vanlige);
+                        System.out.println("Legemiddelet ble lagt til");
+
+                    }
+                    else{
+                        while(styrke==-1){
+                            System.out.println("Hva er styrken på legemiddelet? oppgi styrke i hel eller decimaltall:  ");
+                            if (inn.hasNextLine()){
+                                String nummer = inn.nextLine();
+                                if (nummer!= null){
+                                    try {
+                                        int numb = Integer.parseInt(nummer);
+                                        styrke = numb;
+                                    }catch (NumberFormatException e) {
+                                        System.out.println("Dette er ikke en gyldig styrke. har du skrevet feil? feil nummer? \n press enter for å gi opp, eller [1] for å forsoke igjen");
+                                        if (inn.hasNextLine()){
+                                            p = inn.nextLine();
+                                        }
+                                    }
+                                }   
+                            }
+                        }
+                        if(typen.equals("v")){
+                            Vanedannende vane = new Vanedannende(navn, pris, virkestoff, styrke);
+                            legemiddelliste.leggTil(vane);
+                        }
+                        else if(typen.equals("n")){
+                            Narkotisk narko = new Narkotisk(navn, pris, virkestoff, styrke);
+                            legemiddelliste.leggTil(narko);
+                        }
+                        System.out.println("Legemiddelet ble lagt til. press enter for aa gaa tilbake ");
+                        if (inn.hasNextLine()){
+                            p = inn.nextLine();
+                        }
+                    }
                 }
-            }
             hovedmeny();
             }
-        }
         inn.close();
+        }
     }
+
 
     public void skrivUtAlt(){
         for (Pasient e : pasientliste){
