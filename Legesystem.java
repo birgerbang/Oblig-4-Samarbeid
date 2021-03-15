@@ -33,6 +33,10 @@ public class Legesystem {
                 if(n.equals("4")){
                     visStatistikk();
                 }
+                if(n.equals("")){
+                    System.out.println("Takk for i dag");
+                    input.close();
+                }
             }
             input.close();
         }
@@ -239,6 +243,7 @@ public class Legesystem {
                         }
                     }
                     System.out.println("\nTotalt antall utskrevde resepter på vanedannende legemidler: " + antall + "\n");
+                    System.out.println("Press enter for å gå tilbake til hovedmenyen");
                 }
                 else if (n.equals("2")){
                     antall = 0;
@@ -249,6 +254,7 @@ public class Legesystem {
                         }
                     }
                     System.out.println("\nTotalt antall utskrevde resepter på narkotiske legemidler: " + antall + "\n");
+                    System.out.println("Press enter for å gå tilbake til hovedmenyen");
                 }
                 else if (n.equals("3")){
                     for (Lege e : legeliste){
@@ -261,9 +267,13 @@ public class Legesystem {
                             System.out.println("\n" + e + " har " + e.gyldigeNarkotiskeResepter + " gyldige narkotiske resepter");
                         }
                     }
-                } System.out.println("Press enter for å gå tilbake til hovedmenyen");
+                    System.out.println("Press enter for å gå tilbake til hovedmenyen");
+                } 
+                else if (n.equals("")){
+                    hovedmeny();
+                }
             } nyInput.close();
-        }
+        } 
     }
 
     public void brukResept(){
@@ -290,7 +300,7 @@ public class Legesystem {
                 }
                 Resept resept = reseptliste.hent(i);
                 if (resept.reit > 0){
-                    System.out.println("Kunne ikke bruke resept på " + resept.hentLegemiddel() + ". Ingen gjenværende reit.");
+                    System.out.println("\nKunne ikke bruke resept på " + resept.hentLegemiddel() + ". Ingen gjenværende reit.");
                 } else {
                     resept.bruk();
                 }
