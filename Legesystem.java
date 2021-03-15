@@ -479,7 +479,7 @@ public class Legesystem {
         }
     }
 
-    public void visStatistikk(){
+    public void visStatistikk() throws UlovligUtskrift{
         Scanner nyInput = new Scanner(System.in);
         System.out.println("Trykk på et tall for å skrive ut statistikk: \n1 - Totalt antall resepter på vanedannende legemidler \n2 - Totalt antall utskrevne resepter på narkotiske legemidler \n3 - Statistikk om mulig misbruk av narkotika");
         String n = null;
