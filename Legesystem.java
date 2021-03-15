@@ -4,18 +4,52 @@ import java.util.IllegalFormatException;
 import java.util.Scanner;
 
 public class Legesystem {
-
     Lenkeliste<Pasient> pasientliste = new Lenkeliste<Pasient>();
     Lenkeliste<Lege> legeliste = new Lenkeliste<Lege>();
     Lenkeliste<Legemiddel> legemiddelliste = new Lenkeliste<Legemiddel>();
     Lenkeliste<Resept> reseptliste = new Lenkeliste<Resept>();
+
+    public static void main(String [] args) throws NumberFormatException, UlovligUtskrift{
+        Legesystem hovedsystem = new Legesystem();
+        hovedsystem.lesFil("tekstTest.txt");
+        Scanner input = new Scanner(System.in);
+        String n = null;
+        System.out.println(" Velg 1 for aa skrive ut en fullstendig oversikt over pasienter, leger, legemidler og resepter. \n Velg 2 for aa opprette og legge til nye elementer i systemet \n velg 3 for aa bruke en gitt resept fra listen til en pasient \n velg 4 for aa skrive ut forskjellige former for statistikk \n velg 5 for aa skrive alle data til fil. \n press enter for aa avslutte.");
+        if (input.hasNextLine()){
+            while(n != ""){
+                n = input.nextLine();
+                if(n.startsWith("1")){
+                    System.out.println("Genialt egon");
+                    hovedsystem.skrivUtAlt();
+                }
+            }
+            input.close();
+        }
+    }
+
+    public void skrivUtAlt(){
+        for (Pasient e : pasientliste){
+            System.out.println(e.toString());
+        }
+        for (Lege e : legeliste){
+            System.out.println(e.toString());
+        }
+        for (Legemiddel e : legemiddelliste){
+            System.out.println(e.toString());
+        }
+        for (Resept e : reseptliste){
+            System.out.println(e.toString());
+        }
+    }
     /**
-     * En metode for å lese inn objekter fra fil. Følg filformatet i vedlegg 2. Bruk
-s krivResept-metodene i legeobjektet for å opprette Resept objekter. Dersom et objekt er
-ugyldig eller ikke følger filformatet i vedlegg 2, skal det ikke legges inn i systemet.
-PS: Husk å behandle unntak som kan kastes.
+     * En metode for å lese inn objekter fra fil. Bruk
+        skrivResept-metodene i legeobjektet for å opprette Resept objekter. Dersom et objekt er
+        ugyldig eller ikke følger filformatet i vedlegg 2, skal det ikke legges inn i systemet.
+        PS: Husk å behandle unntak som kan kastes.
+     * @throws UlovligUtskrift
+     * @throws NumberFormatException
      */
-    public void lesFil(String filnavn){
+    public void lesFil(String filnavn) throws NumberFormatException, UlovligUtskrift{
         try{
             File fil = new File(filnavn);
             Scanner leser = new Scanner(fil);
@@ -71,22 +105,22 @@ PS: Husk å behandle unntak som kan kastes.
                         while(!data.startsWith("#")){
                             String[] resepter = data.split(",");
                             if(resepter[3]=="hvit"){
-                                HvitResept hvit = new HvitResept(getLegemiddel(resepter[0]), getLege(resepter[1]), getPasient(resepter[2]), Integer.parseInt(resepter[3]));
+                                HvitResept hvit = getLege(resepter[1]).skrivHvitResept(getLegemiddel(resepter[0]), getPasient(resepter[2]), Integer.parseInt(resepter[3]));
                                 reseptliste.leggTil(hvit);
                                 data = leser.nextLine();
                             }
                             else if(resepter[3]=="blaa"){
-                                BlaaResept blaa = new BlaaResept(getLegemiddel(resepter[0]), getLege(resepter[1]), getPasient(resepter[2]), Integer.parseInt(resepter[3]));
+                                BlaaResept blaa = getLege(resepter[1]).skrivBlaaResept(getLegemiddel(resepter[0]), getPasient(resepter[2]), Integer.parseInt(resepter[3]));
                                 reseptliste.leggTil(blaa);
                                 data = leser.nextLine();
                             }
                             else if(resepter[3]=="millitaer"){
-                                MilitaerResept millitaer = new MilitaerResept(getLegemiddel(resepter[0]), getLege(resepter[1]), getPasient(resepter[2]), Integer.parseInt(resepter[3]));
+                                MilitaerResept millitaer = getLege(resepter[1]).skrivMilitaerResept(getLegemiddel(resepter[0]), getPasient(resepter[2]), Integer.parseInt(resepter[3]));
                                 reseptliste.leggTil(millitaer);
                                 data = leser.nextLine();
                             }
                             else if(resepter[3]=="p"){
-                                PResept presept = new PResept(getLegemiddel(resepter[0]), getPasient(resepter[2]));
+                                PResept presept = getLege(resepter[1]).skrivPResept(getLegemiddel(resepter[0]), getPasient(resepter[2]));
                                 reseptliste.leggTil(presept);
                                 data = leser.nextLine();
                             }   
