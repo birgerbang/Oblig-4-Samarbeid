@@ -146,6 +146,8 @@ public class Legesystem {
         return null;
     }
 
+    System.out.println("hei");
+
     public Legemiddel getLegemiddel(String legemiddelnavn){
             for (Legemiddel e : legemiddelliste){
             if (e.navn == legemiddelnavn){
