@@ -138,13 +138,35 @@ public class Legesystem {
     }
 
     public void visStatistikk(){
-        System.out.println("Vanedannende resepter: \n");
-        for (Legemiddel e : legemiddelliste){
-            if (e instanceof Vanedannende){
-                System.out.println(e);
-            }
-            if (e instanceof Narkotisk){
-                System.out.println(e);
+        Scanner nyInput = new Scanner(System.in);
+        System.out.println("Trykk på et tall for å skrive ut statistikk: \n1 - Totalt antall resepter på vanedannende legemidler \n 2 - Totalt antall utskrevne resepter på narkotiske legemidler \n 3 - Statistikk om mulig misbruk av narkotika");
+        String n = null;
+        int antall;
+        if (nyInput.hasNextLine()){
+            while (n != ""){
+                n = nyInput.nextLine();
+                if (n.startsWith("1")){
+                    antall = 0;
+                    System.out.println("Vanedannende resepter: \n");
+                    for (Resept e : reseptliste){
+                        if (e.legemiddel instanceof Vanedannende){
+                            antall++;
+                        }
+                    }
+                    System.out.println(antall);
+                }
+                else if (n.startsWith("2")){
+                    antall = 0;
+                    for (Resept e : reseptliste){
+                        if (e.legemiddel instanceof Narkotisk){
+                            antall++;
+                        }
+                    }
+                    System.out.println(antall);
+                }
+                else if (n.startsWith("3")){
+                    
+                }
             }
         }
     }
