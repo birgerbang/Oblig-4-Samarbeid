@@ -1,0 +1,18 @@
+F1) Ting som gikk bra:
+- Samarbeid
+- kommunikasjon
+- God arbeidsflyt
+- Gjevn arbeidsfordeling
+- Gode løsninger som begge forstår
+- Lebare koder
+
+F2) Hva ville vi gjort annerledes neste gang:
+- Bruke github fra starten av
+- Se gjennom oppgaver mer nøye, tidligere
+- Muligens møtes fysisk tidligere
+
+F3) Hva vi har fått ut av samarbeidet:
+- Fått lære hvordan man kan jobbe sammen på programmer
+- Fått en god innføring i github og kodedeling
+- Generell samarbeidserfaring
+- Hyggelig med tanke på det sosiale aspektet

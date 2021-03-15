@@ -29,6 +29,7 @@ public class Lege implements Comparable<Lege> {
             throw new UlovligUtskrift(this, legemiddel);
         }
         HvitResept nyHvitResept = new HvitResept(legemiddel, this, pasient, reit);
+        pasient.leggTilResept(nyHvitResept);
         utskrevedeResepter.leggTil(nyHvitResept);
         return nyHvitResept;
     }
@@ -38,6 +39,7 @@ public class Lege implements Comparable<Lege> {
             throw new UlovligUtskrift(this, legemiddel);
         }
         MilitaerResept nyMilitaerResept = new MilitaerResept(legemiddel, this, pasient, reit);
+        pasient.leggTilResept(nyMilitaerResept);
         utskrevedeResepter.leggTil(nyMilitaerResept);
         return nyMilitaerResept;
     }
@@ -47,7 +49,7 @@ public class Lege implements Comparable<Lege> {
             throw new UlovligUtskrift(this, legemiddel);
         }
         PResept nyPResept = new PResept(legemiddel, this, pasient);
-        System.out.println(nyPResept);
+        pasient.leggTilResept(nyPResept);
         utskrevedeResepter.leggTil(nyPResept);
         return nyPResept;
     }
@@ -57,6 +59,7 @@ public class Lege implements Comparable<Lege> {
             throw new UlovligUtskrift(this, legemiddel);
         }
         BlaaResept nyBlaaResept = new BlaaResept(legemiddel, this, pasient, reit);
+        pasient.leggTilResept(nyBlaaResept);
         utskrevedeResepter.leggTil(nyBlaaResept);
         return nyBlaaResept;
     }
