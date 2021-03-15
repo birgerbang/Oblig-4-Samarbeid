@@ -16,10 +16,9 @@ public class Legesystem {
         String n = null;
         System.out.println(" Velg 1 for aa skrive ut en fullstendig oversikt over pasienter, leger, legemidler og resepter. \n Velg 2 for aa opprette og legge til nye elementer i systemet \n velg 3 for aa bruke en gitt resept fra listen til en pasient \n velg 4 for aa skrive ut forskjellige former for statistikk \n velg 5 for aa skrive alle data til fil. \n press enter for aa avslutte.");
         if (input.hasNextLine()){
-            while(n != ""){
+            while(n!=""){
                 n = input.nextLine();
                 if(n.startsWith("1")){
-                    System.out.println("Genialt egon");
                     hovedsystem.skrivUtAlt();
                 }
             }
@@ -65,7 +64,7 @@ public class Legesystem {
                             data = leser.nextLine();
                         }
                     }
-                    else if (data.startsWith("# Legemidler")){
+                    if (data.startsWith("# Legemidler")){
                         data = leser.nextLine();
                         while(!data.startsWith("#")){
                             String[] legemiddel = data.split(",");
@@ -84,71 +83,70 @@ public class Legesystem {
                             data = leser.nextLine();
                         }
                     }
-                    else if (data.startsWith("# Leger")){
+                    if (data.startsWith("# Leger")){
                         data = leser.nextLine();
                         while(!data.startsWith("#")){
                             String[] leger = data.split(",");
-                            if(leger[1]!="0"){
+                            if(!leger[1].equals("0")){
                                 Spesialist spes = new Spesialist(leger[0], leger[1]);
                                 legeliste.leggTil(spes);
                             }
                             else{
                                 Lege lege = new Lege(leger[0]);
                                 legeliste.leggTil(lege);
-                                data = leser.nextLine();
                             }
-                        data = leser.nextLine();
+                            data = leser.nextLine();
                         }
                     }
-                    else if (data.startsWith("# Resepter")){
+                    if (data.startsWith("# Resepter")){
                         data = leser.nextLine();
                         while(!data.startsWith("#")){
                             String[] resepter = data.split(",");
-                            if(resepter[3]=="hvit"){
-                                HvitResept hvit = getLege(resepter[1]).skrivHvitResept(getLegemiddel(resepter[0]), getPasient(resepter[2]), Integer.parseInt(resepter[3]));
+
+                            if(resepter[3].equals("hvit")){
+                                System.out.println(resepter[1]);
+                                HvitResept hvit = getLege(resepter[1]).skrivHvitResept(getLegemiddel(resepter[0]), getPasient(resepter[2]), Integer.parseInt(resepter[4]));
                                 reseptliste.leggTil(hvit);
-                                data = leser.nextLine();
                             }
-                            else if(resepter[3]=="blaa"){
-                                BlaaResept blaa = getLege(resepter[1]).skrivBlaaResept(getLegemiddel(resepter[0]), getPasient(resepter[2]), Integer.parseInt(resepter[3]));
+                            else if(resepter[3].equals("blaa")){
+                                BlaaResept blaa = getLege(resepter[1]).skrivBlaaResept(getLegemiddel(resepter[0]), getPasient(resepter[2]), Integer.parseInt(resepter[4]));
                                 reseptliste.leggTil(blaa);
-                                data = leser.nextLine();
                             }
-                            else if(resepter[3]=="millitaer"){
-                                MilitaerResept millitaer = getLege(resepter[1]).skrivMilitaerResept(getLegemiddel(resepter[0]), getPasient(resepter[2]), Integer.parseInt(resepter[3]));
+                            else if(resepter[3].equals("millitaer")){
+                                MilitaerResept millitaer = getLege(resepter[1]).skrivMilitaerResept(getLegemiddel(resepter[0]), getPasient(resepter[2]), Integer.parseInt(resepter[4]));
                                 reseptliste.leggTil(millitaer);
-                                data = leser.nextLine();
                             }
-                            else if(resepter[3]=="p"){
+                            else if(resepter[3].equals("p")){
                                 PResept presept = getLege(resepter[1]).skrivPResept(getLegemiddel(resepter[0]), getPasient(resepter[2]));
                                 reseptliste.leggTil(presept);
-                                data = leser.nextLine();
-                            }   
+                            }
+                            data = leser.nextLine();
                         }
                     }      
                 }catch (IllegalFormatException f){
-                System.out.println("Element fra fil ikke lagt til, feil formatering");
+                System.err.println("Element fra fil ikke lagt til, feil formatering");
                 }
             }
             leser.close();
         } catch (FileNotFoundException e) {
-        System.out.println("Error: kan ikke lese " + filnavn + "");
+        System.err.println("Error: kan ikke lese " + filnavn + "");
         System.exit(1);
         }
     }
 
-    public Lege getLege(String legenavn){
+    public Lege getLege(String legeNavn){
         for (Lege e : legeliste){
-            if (e.legeNavn == legenavn){
+            if (e.hentNavn().equals(legeNavn)){
                 return e;
             }
         }
         return null;
     }
 
-    public Legemiddel getLegemiddel(String legemiddelnavn){
-            for (Legemiddel e : legemiddelliste){
-            if (e.navn == legemiddelnavn){
+    public Legemiddel getLegemiddel(String legemiddelnummer){
+        int id = Integer.parseInt(legemiddelnummer);
+        for (Legemiddel e : legemiddelliste){
+            if (e.hentID() == id){
                 return e;
             }
         }

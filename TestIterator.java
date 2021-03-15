@@ -11,7 +11,7 @@ public class TestIterator {
     lista.leggTil(underlegg);
     lista.leggTil(absolutt);
     for (Lege e : lista){
-        System.out.println(e.legeNavn);
+        System.out.println(e.hentNavn());
         }
     } 
 }
