@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.text.ParsePosition;
 import java.util.IllegalFormatException;
 import java.util.Scanner;
@@ -17,7 +18,7 @@ public class Legesystem {
     public void hovedmeny() throws UlovligUtskrift{
         Scanner input = new Scanner(System.in);
         String n = null;
-        System.out.println(" Velg 1 for aa skrive ut oversikt over pasienter, leger, legemidler og resepter \n Velg 2 for aa opprette og legge til nye elementer i systemet \n Velg 3 for aa bruke en gitt resept fra listen til en pasient \n velg 4 for aa skrive ut forskjellige former for statistikk \n Velg 5 for aa skrive alle data til fil \n Eller press enter for aa avslutte.");
+        System.out.println(" Velg 1 for aa skrive ut oversikt over pasienter, leger, legemidler og resepter \n Velg 2 for aa opprette og legge til nye elementer i systemet \n Velg 3 for aa bruke en gitt resept fra listen til en pasient \n velg 4 for aa skrive ut forskjellige former for statistikk \n Velg 5 for aa skrive alle data til fil \n Eller press enter for aa avslutte. ");
         if (input.hasNextLine()){
             while(n!=""){
                 n = input.nextLine();
@@ -35,6 +36,10 @@ public class Legesystem {
                 }
                 else if(n.equals("4")){
                     visStatistikk();
+                    hovedmeny();
+                }
+                else if (n.equals("5")){
+                    skrivTilFil();
                     hovedmeny();
                 }
                 else if(n.equals("")){
@@ -572,6 +577,35 @@ public class Legesystem {
             }
         }
     input.close();
+    }
+
+    public void skrivTilFil(){
+        System.out.println("Navn på fil:");
+        Scanner input = new Scanner(System.in);
+        String filnavn = input.nextLine();
+        File fil = new File(filnavn);
+        try {
+            PrintWriter pw = new PrintWriter(fil);
+            pw.append("Pasienter: \n");
+            for (Pasient e : pasientliste){
+                pw.append(e.toString() + "\n");
+            }
+            pw.append("Leger: \n");
+            for (Lege e : legeliste){
+                pw.append(e.toString() + "\n");
+            }
+            pw.append("Legemidler: \n");
+            for (Legemiddel e : legemiddelliste){
+                pw.append(e.toString() + "\n");
+            }
+            pw.append("Resepter: \n");
+            for (Resept e : reseptliste){
+                pw.append(e.toString() + "\n");
+            }
+            pw.close();
+        } catch (FileNotFoundException e){ 
+            System.out.println(e.getMessage());
+        }
     }
 
     public Lege getLege(String legeNavn){
