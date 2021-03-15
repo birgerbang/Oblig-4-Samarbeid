@@ -10,7 +10,6 @@ public class legeTest {
         Pasient john = new Pasient("John", "11080829974");
         Narkotisk oxicotin = new Narkotisk("Oxicotin", 200, 12.5, 20);
         Vanlig prevasjonstabletter = new Vanlig("prevasjonstabletter", 200, 20);
-        BlaaResept resept = new BlaaResept(oxicotin, ina, john, 10);
         try {
             ina.skrivBlaaResept(oxicotin, john, 10);
         } catch (UlovligUtskrift e) {
@@ -18,6 +17,8 @@ public class legeTest {
         }
 
         ina.skrivPResept(prevasjonstabletter, john);
+        ina.skrivHvitResept(prevasjonstabletter, john, 10);
+        fredrik.skrivMilitaerResept(prevasjonstabletter, john, 10);
         fredrik.skrivBlaaResept(oxicotin, john, 10);
 
         

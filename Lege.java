@@ -20,7 +20,7 @@ public class Lege implements Comparable<Lege> {
         return hentNavn().compareTo(x.hentNavn());
     }
 
-    public Lenkeliste hentUtskrevedeResepter(){
+    public Lenkeliste<Resept> hentUtskrevedeResepter(){
         return utskrevedeResepter;
     }
     
@@ -47,6 +47,7 @@ public class Lege implements Comparable<Lege> {
             throw new UlovligUtskrift(this, legemiddel);
         }
         PResept nyPResept = new PResept(legemiddel, this, pasient);
+        System.out.println(nyPResept);
         utskrevedeResepter.leggTil(nyPResept);
         return nyPResept;
     }
