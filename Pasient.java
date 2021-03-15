@@ -18,6 +18,10 @@ public class Pasient{
         return id;
     }
 
+    protected String hentPasientNavn(){
+        return this.navn;
+    }
+
     public void leggTilResept(Resept resept){
         reseptListe.leggPaa(resept);
     }
