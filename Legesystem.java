@@ -17,23 +17,27 @@ public class Legesystem {
     public void hovedmeny() throws UlovligUtskrift{
         Scanner input = new Scanner(System.in);
         String n = null;
-        System.out.println(" Velg 1 for aa skrive ut oversikt over pasienter, leger, legemidler og resepter. \n Velg 2 for aa opprette og legge til nye elementer i systemet \n velg 3 for aa bruke en gitt resept fra listen til en pasient \n velg 4 for aa skrive ut forskjellige former for statistikk \n velg 5 for aa skrive alle data til fil. \n press enter for aa avslutte.");
+        System.out.println(" Velg 1 for aa skrive ut oversikt over pasienter, leger, legemidler og resepter \n Velg 2 for aa opprette og legge til nye elementer i systemet \n Velg 3 for aa bruke en gitt resept fra listen til en pasient \n velg 4 for aa skrive ut forskjellige former for statistikk \n Velg 5 for aa skrive alle data til fil \n Eller press enter for aa avslutte.");
         if (input.hasNextLine()){
             while(n!=""){
                 n = input.nextLine();
                 if(n.startsWith("1")){
                     skrivUtAlt();
+                    hovedmeny();
                 }
-                if(n.equals("2")){
+                else if(n.equals("2")){
                     leggTil();
+                    hovedmeny();
                 }
-                if(n.equals("3")){
+                else if(n.equals("3")){
                     brukResept();
+                    hovedmeny();
                 }
-                if(n.equals("4")){
+                else if(n.equals("4")){
                     visStatistikk();
+                    hovedmeny();
                 }
-                if(n.equals("")){
+                else if(n.equals("")){
                     System.out.println("Takk for i dag");
                     input.close();
                 }
@@ -45,7 +49,7 @@ public class Legesystem {
     public void leggTil() throws UlovligUtskrift{
         Scanner inn = new Scanner(System.in);
         String p = null;
-        System.out.println(" Velg 1 for aa legge til lege \n velg 2 for aa legge til pasient \n velg 3 for aa legge til resept \n velg 4 for aa legge til legemiddel. \n enter for aa gaa tilbake.");
+        System.out.println(" Velg 1 for aa legge til lege \n Velg 2 for aa legge til pasient \n Velg 3 for aa legge til resept \n Velg 4 for aa legge til legemiddel \n Eller press enter for aa gaa tilbake");
         if (inn.hasNextLine()){
             while(p!=""){
                 p = inn.nextLine();
@@ -84,6 +88,15 @@ public class Legesystem {
                                     if(p.equals("")){
                                         leggTil();
                                     }
+                                }
+                            }
+                        }
+                        else{
+                            System.out.println("Ugyldig valg. Press enter for aa gaa tilbake");
+                            if(inn.hasNextLine()){
+                                p = inn.nextLine();
+                                if(p.equals("")){
+                                    leggTil();
                                 }
                             }
                         }
@@ -174,7 +187,7 @@ public class Legesystem {
                                     break;
                                 }
                                 else{
-                                    System.out.println("Legemiddelet ble ikke funnet. har du skrevet feil? \n press enter for å gaa tilbake og legge til legemiddel, [1] for å forsoke igjen");
+                                    System.out.println("Legemiddelet ble ikke funnet. har du skrevet feil? \n press enter for å gaa tilbake eller [1] for å forsoke igjen");
                                     if (inn.hasNextLine()){
                                         p = inn.nextLine();
                                     }
@@ -184,16 +197,16 @@ public class Legesystem {
                     }
                     Pasient pasienten = null;
                     while(pasienten == null && p!=""){
-                        System.out.println("Pasientnummeret til pasienten? : ");
+                        System.out.println("Pasientnummeret eller navnet til pasienten? : ");
                         if (inn.hasNextLine()){
-                            String nummer = inn.nextLine();
-                            if (nummer!= null){
-                                pasienten = getPasient(nummer);
+                            String nummernavn = inn.nextLine();
+                            if(nummernavn!= null){
+                                pasienten = getPasient(nummernavn);
                                 if (pasienten != null){
                                     break;
                                 }
                                 else{
-                                    System.out.println("Pasienten ble ikke funnet. har du skrevet feil nummer? \n press enter for å gaa tilbake og legge til pasienten, [1] for å forsoke igjen");
+                                    System.out.println("Pasienten ble ikke funnet. Har du skrevet feil navn eller nummer? \n press enter for å gaa tilbake legge eller [1] for å forsoke igjen");
                                     if (inn.hasNextLine()){
                                         p = inn.nextLine();
                                     }
@@ -389,7 +402,6 @@ public class Legesystem {
      * En metode for å lese inn objekter fra fil. Bruk
         skrivResept-metodene i legeobjektet for å opprette Resept objekter. Dersom et objekt er
         ugyldig eller ikke følger filformatet i vedlegg 2, skal det ikke legges inn i systemet.
-        PS: Husk å behandle unntak som kan kastes.
      * @throws UlovligUtskrift
      * @throws NumberFormatException
      */
@@ -559,6 +571,7 @@ public class Legesystem {
                 }
             }
         }
+    input.close();
     }
 
     public Lege getLege(String legeNavn){
@@ -569,18 +582,29 @@ public class Legesystem {
         }
         return null;
     }
-
+/**
+ * Soker etter et legemiddel etter navn
+ * @return legemiddelet, om det finnes i legemiddellisten.
+ */
     public Legemiddel getLegemiddel(String legemiddelnavn){
-            for (Legemiddel e : legemiddelliste){
-            if (e.navn == legemiddelnavn){
+        for (Legemiddel e : legemiddelliste){
+            if (e.hentNavn().equals(legemiddelnavn)){
                 return e;
             }
         }
-        return null;
-    }   
-    public Pasient getPasient(String pasientnummer){
+    return null;
+    }
+
+/**
+ * Soker etter et en pasient etter nummer eller navn:
+ * @return pasientobjektet, om det finnes i pasientliste.
+ */
+    public Pasient getPasient(String pasient){
         for (Pasient e : pasientliste){
-            if (e.id == Integer.parseInt(pasientnummer)){
+            if (e.id == Integer.parseInt(pasient)){
+                return e;
+            }
+            else if(e.hentPasientNavn().equals(pasient)){
                 return e;
             }
         }
