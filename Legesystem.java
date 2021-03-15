@@ -215,6 +215,40 @@ public class Legesystem {
         }
     }
 
+    public void visStatistikk(){
+        Scanner nyInput = new Scanner(System.in);
+        System.out.println("Trykk på et tall for å skrive ut statistikk: \n1 - Totalt antall resepter på vanedannende legemidler \n 2 - Totalt antall utskrevne resepter på narkotiske legemidler \n 3 - Statistikk om mulig misbruk av narkotika");
+        String n = null;
+        int antall;
+        if (nyInput.hasNextLine()){
+            while (n != ""){
+                n = nyInput.nextLine();
+                if (n.startsWith("1")){
+                    antall = 0;
+                    System.out.println("Vanedannende resepter: \n");
+                    for (Resept e : reseptliste){
+                        if (e.legemiddel instanceof Vanedannende){
+                            antall++;
+                        }
+                    }
+                    System.out.println(antall);
+                }
+                else if (n.startsWith("2")){
+                    antall = 0;
+                    for (Resept e : reseptliste){
+                        if (e.legemiddel instanceof Narkotisk){
+                            antall++;
+                        }
+                    }
+                    System.out.println(antall);
+                }
+                else if (n.startsWith("3")){
+                    
+                }
+            }
+        }
+    }
+
     public Lege getLege(String legeNavn){
         for (Lege e : legeliste){
             if (e.hentNavn().equals(legeNavn)){
@@ -224,10 +258,9 @@ public class Legesystem {
         return null;
     }
 
-    public Legemiddel getLegemiddel(String legemiddelnummer){
-        int id = Integer.parseInt(legemiddelnummer);
-        for (Legemiddel e : legemiddelliste){
-            if (e.hentID() == id){
+    public Legemiddel getLegemiddel(String legemiddelnavn){
+            for (Legemiddel e : legemiddelliste){
+            if (e.navn == legemiddelnavn){
                 return e;
             }
         }
