@@ -5,21 +5,23 @@ import java.util.Scanner;
 
 public class Legesystem {
     Lenkeliste<Pasient> pasientliste = new Lenkeliste<Pasient>();
-    Lenkeliste<Lege> legeliste = new Lenkeliste<Lege>();
+    SortertLenkeliste<Lege> legeliste = new SortertLenkeliste<Lege>();
     Lenkeliste<Legemiddel> legemiddelliste = new Lenkeliste<Legemiddel>();
     Lenkeliste<Resept> reseptliste = new Lenkeliste<Resept>();
 
     public static void main(String [] args) throws NumberFormatException, UlovligUtskrift{
         Legesystem hovedsystem = new Legesystem();
-        hovedsystem.lesFil("tekstTest.txt");
         Scanner input = new Scanner(System.in);
         String n = null;
-        System.out.println(" Velg 1 for aa skrive ut en fullstendig oversikt over pasienter, leger, legemidler og resepter. \n Velg 2 for aa opprette og legge til nye elementer i systemet \n velg 3 for aa bruke en gitt resept fra listen til en pasient \n velg 4 for aa skrive ut forskjellige former for statistikk \n velg 5 for aa skrive alle data til fil. \n press enter for aa avslutte.");
+        System.out.println(" Velg 1 for aa skrive ut oversikt over pasienter, leger, legemidler og resepter. \n Velg 2 for aa opprette og legge til nye elementer i systemet \n velg 3 for aa bruke en gitt resept fra listen til en pasient \n velg 4 for aa skrive ut forskjellige former for statistikk \n velg 5 for aa skrive alle data til fil. \n press enter for aa avslutte.");
         if (input.hasNextLine()){
             while(n!=""){
                 n = input.nextLine();
                 if(n.startsWith("1")){
                     hovedsystem.skrivUtAlt();
+                }
+                if(n.equals("2"){
+                    hovedsystem.leggTil
                 }
             }
             input.close();
@@ -31,6 +33,7 @@ public class Legesystem {
             System.out.println(e.toString());
         }
         for (Lege e : legeliste){
+
             System.out.println(e.toString());
         }
         for (Legemiddel e : legemiddelliste){
