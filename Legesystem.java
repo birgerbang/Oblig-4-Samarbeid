@@ -11,6 +11,9 @@ public class Legesystem {
 
     public static void main(String [] args) throws NumberFormatException, UlovligUtskrift{
         Legesystem hovedsystem = new Legesystem();
+        hovedsystem.hovedmeny();
+    }
+    public void hovedmeny(){
         Scanner input = new Scanner(System.in);
         String n = null;
         System.out.println(" Velg 1 for aa skrive ut oversikt over pasienter, leger, legemidler og resepter. \n Velg 2 for aa opprette og legge til nye elementer i systemet \n velg 3 for aa bruke en gitt resept fra listen til en pasient \n velg 4 for aa skrive ut forskjellige former for statistikk \n velg 5 for aa skrive alle data til fil. \n press enter for aa avslutte.");
@@ -18,14 +21,89 @@ public class Legesystem {
             while(n!=""){
                 n = input.nextLine();
                 if(n.startsWith("1")){
-                    hovedsystem.skrivUtAlt();
+                    skrivUtAlt();
                 }
-                if(n.equals("2"){
-                    hovedsystem.leggTil
+                if(n.equals("2")){
+                    leggTil();
                 }
             }
             input.close();
         }
+    }
+    public void leggTil(){
+        Scanner inn = new Scanner(System.in);
+        String p = null;
+        System.out.println(" Velg 1 for aa legge til lege \n velg 2 for aa legge til pasient \n velg 3 for aa legge til resept \n velg 4 for aa legge til legemiddel. \n enter for aa gaa tilbake.");
+        if (inn.hasNextLine()){
+            while(p!=""){
+                p = inn.nextLine();
+                if(p.equals("1")){
+                    System.out.println("Er legen en spesialist? [1] hvis ja, [2] hvis nei.");
+                    if (inn.hasNextLine()){
+                        p = inn.nextLine();
+                        if(p.equals("1")){
+                            System.out.println("Skriv inn kontroll-ID: ");
+                            if (inn.hasNextLine()){
+                                String kontrollID = inn.nextLine();
+                                if(kontrollID!= null){
+                                    System.out.println("Skriv inn legens navn: ");
+                                    if (inn.hasNextLine()){
+                                        Spesialist spess = new Spesialist(inn.nextLine(), kontrollID);
+                                        legeliste.leggTil(spess);
+                                        System.out.println("Spesialisten ble lagt til, press enter for aa gaa tilbake");
+                                        if(inn.hasNextLine()){
+                                            p = inn.nextLine();
+                                            if(p.equals("")){
+                                                leggTil();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    else if (p.equals("2")){
+                        System.out.println("Skriv inn legens navn: ");
+                        if (inn.hasNextLine()){
+                            Lege legen = new Lege(inn.nextLine());
+                            legeliste.leggTil(legen);
+                            System.out.println("Legen ble lagt til, press enter for aa gaa tilbake");
+                            if(inn.hasNextLine()){
+                                p = inn.nextLine();
+                                if(p.equals("")){
+                                    leggTil();
+                                }
+                            }
+                        }
+                    }
+                }
+                else if(p.equals("2")){
+                    System.out.println("Hva er pasientens navn: ");
+                    if (inn.hasNextLine()){
+                        String navn = inn.nextLine();
+                        if (navn!= null){
+                            System.out.println("Hva er pasientens personnummer?");
+                            if (inn.hasNextLine()){
+                                String personnummer = inn.nextLine();
+                                if(personnummer.length()==11){
+                                    Pasient pasienten = new Pasient(navn, personnummer);
+                                    pasientliste.leggTil(pasienten);
+                                    System.out.println("Pasienten ble lagt til, press enter for aa gaa tilbake");
+                                }
+                            }
+                        }
+                    }
+                }
+                else if(p.equals("4")){
+                 
+                }
+                else if(p.equals("4")){
+                    
+                }
+            }
+            hovedmeny();
+            }
+        }
+        inn.close();
     }
 
     public void skrivUtAlt(){
