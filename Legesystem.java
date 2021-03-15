@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.ParsePosition;
 import java.util.IllegalFormatException;
 import java.util.Scanner;
 
@@ -25,6 +26,16 @@ public class Legesystem {
                 }
                 if(n.equals("2")){
                     leggTil();
+                }
+                if(n.equals("3")){
+                    brukResept();
+                }
+                if(n.equals("4")){
+                    visStatistikk();
+                }
+                if(n.equals("")){
+                    System.out.println("Takk for i dag");
+                    input.close();
                 }
             }
             input.close();
@@ -470,33 +481,81 @@ public class Legesystem {
 
     public void visStatistikk(){
         Scanner nyInput = new Scanner(System.in);
-        System.out.println("Trykk på et tall for å skrive ut statistikk: \n1 - Totalt antall resepter på vanedannende legemidler \n 2 - Totalt antall utskrevne resepter på narkotiske legemidler \n 3 - Statistikk om mulig misbruk av narkotika");
+        System.out.println("Trykk på et tall for å skrive ut statistikk: \n1 - Totalt antall resepter på vanedannende legemidler \n2 - Totalt antall utskrevne resepter på narkotiske legemidler \n3 - Statistikk om mulig misbruk av narkotika");
         String n = null;
         int antall;
         if (nyInput.hasNextLine()){
             while (n != ""){
                 n = nyInput.nextLine();
-                if (n.startsWith("1")){
+                if (n.equals("1")){
                     antall = 0;
-                    System.out.println("Vanedannende resepter: \n");
+                    System.out.println("\nVanedannende resepter: \n");
                     for (Resept e : reseptliste){
                         if (e.legemiddel instanceof Vanedannende){
                             antall++;
                         }
                     }
-                    System.out.println(antall);
+                    System.out.println("\nTotalt antall utskrevde resepter på vanedannende legemidler: " + antall + "\n");
+                    System.out.println("Press enter for å gå tilbake til hovedmenyen");
                 }
-                else if (n.startsWith("2")){
+                else if (n.equals("2")){
                     antall = 0;
+                    System.out.println("\nNarkotiske resepter: \n");
                     for (Resept e : reseptliste){
                         if (e.legemiddel instanceof Narkotisk){
                             antall++;
                         }
                     }
-                    System.out.println(antall);
+                    System.out.println("\nTotalt antall utskrevde resepter på narkotiske legemidler: " + antall + "\n");
+                    System.out.println("Press enter for å gå tilbake til hovedmenyen");
                 }
-                else if (n.startsWith("3")){
-                    
+                else if (n.equals("3")){
+                    for (Lege e : legeliste){
+                        if (e.skrevetUtNarkotisk()){
+                            System.out.println(e + " har skrevet ut " + e.antallNarkotiskeResepter + " resepter av narkotiske legemidler \n");
+                        }
+                    }
+                    for (Pasient e : pasientliste){
+                        if (e.harNarkotiskResept()){
+                            System.out.println("\n" + e + " har " + e.gyldigeNarkotiskeResepter + " gyldige narkotiske resepter");
+                        }
+                    }
+                    System.out.println("Press enter for å gå tilbake til hovedmenyen");
+                } 
+                else if (n.equals("")){
+                    hovedmeny();
+                }
+            } nyInput.close();
+        } 
+    }
+
+    public void brukResept(){
+        Scanner input = new Scanner(System.in);
+        String n = null;
+        int index = 0;
+        System.out.println("Hvilken pasient vil du se resepter for?");
+        for (Pasient e : pasientliste){
+            System.out.println(index + ": " + e.hentPasientNavn() + " (fnr: " + e.fodselsnummer + ")\n");
+            index++;
+        }
+        index = 0;
+        if (input.hasNextLine()){
+            while (n != ""){
+                n = input.nextLine();
+                int i = Integer.parseInt(n);
+                Pasient pasient = pasientliste.hent(i);
+                pasient.hentPasientNavn();
+                System.out.println("\nValgt pasient: " + pasient.hentPasientNavn() + " (fnr: " + pasient.fodselsnummer + ")\n");
+                System.out.println("Hvilken resept vil du bruke?");
+                for (Resept e : reseptliste){
+                    System.out.println(index + ": " + e.hentLegemiddel() + " (" + e.hentReit() + " reit)\n");
+                    index++;
+                }
+                Resept resept = reseptliste.hent(i);
+                if (resept.reit > 0){
+                    System.out.println("\nKunne ikke bruke resept på " + resept.hentLegemiddel() + ". Ingen gjenværende reit.");
+                } else {
+                    resept.bruk();
                 }
             }
         }
