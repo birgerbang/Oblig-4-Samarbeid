@@ -1,7 +1,6 @@
 public class PResept extends HvitResept{
     static int rabatt = 108;
-    int PReit = 3;
-    
+    int Preit = 3;
     public PResept(Legemiddel legemiddel, Lege utskrivendeLege, Pasient pasient){
         super(legemiddel, utskrivendeLege, pasient);
     }
@@ -18,17 +17,18 @@ public class PResept extends HvitResept{
 
     @Override
     public boolean bruk(){
-        if (PReit <= 0){
+        if (Preit <= 0){
             return false;
         } else {
-            PReit -= 1;
+            Preit -= 1;
             return true;
         }
     }
 
     @Override
     public String toString(){
-        return ("Resept ID: " + hentId() + "\nLegemiddel: " + hentLegemiddel() + "\nLege som skrev ut denne resepten: " + hentUstskrivendeLege() + 
-        "\nPasient ID: " + hentPasientId() + "\nReit: " + hentReit() + "\nResept farge: " + farge() + "\nPris å betale: " + prisAaBetale());
+        return ("Resept ID: " + hentId() + "\nLegemiddel: " + hentLegemiddel() + "\nLege som skrev ut denne resepten: " + hentUtskrivendeLege() + 
+        "\nPasient ID: " + hentPasientId() + "\nReit: " + hentReit() + "\nResept farge: " + farge() + "\nPris å betale: " + prisAaBetale() + "\n");
     }
 }
+

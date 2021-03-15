@@ -4,7 +4,7 @@ public class HvitResept extends Resept {
     }
 
     public HvitResept(Legemiddel legemiddel, Lege utskrivendeLege, Pasient pasient){
-        super(legemiddel, pasient);
+        super(legemiddel, utskrivendeLege, pasient);
     }
 /*
     public HvitResept(Legemiddel legemiddel, Pasient pasient, int reit){
@@ -23,7 +23,7 @@ public class HvitResept extends Resept {
 
     @Override
     public String toString(){
-        return ("Resept ID: " + hentId() + "\nLegemiddel: " + hentLegemiddel() + "\nLege som skrev ut denne resepten: " + hentUstskrivendeLege() + 
-        "\nPasient ID: " + hentPasientId() + "\nReit: " + hentReit() + "\nResept farge: " + farge() + "\nPris å betale: " + prisAaBetale());
+        return ("Resept ID: " + hentId() + "\nLegemiddel: " + hentLegemiddel() + "\nLege som skrev ut denne resepten: " + hentUtskrivendeLege() + 
+        "\nPasient ID: " + hentPasientId() + "\nReit: " + hentReit() + "\nResept farge: " + farge() + "\nPris å betale: " + prisAaBetale() + "\n");
     }
 }
