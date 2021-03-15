@@ -4,6 +4,7 @@ public class Pasient{
     static int teller;
     int id = 0;
     Stabel<Resept> reseptListe;
+    int gyldigeNarkotiskeResepter = 0;
 
     public Pasient(String navn, String fodselsnummer){
         this.navn = navn;
@@ -23,6 +24,17 @@ public class Pasient{
 
     public Stabel hentReseptListe(){
         return reseptListe;
+    }
+
+    public boolean harNarkotiskResept(){
+        boolean faktisk = false;
+        for (Resept e : reseptListe){
+            if (e.legemiddel instanceof Narkotisk && e.hentReit() > 0 ){
+                gyldigeNarkotiskeResepter++;
+                faktisk = true;
+            }
+        }
+        return faktisk;
     }
 
     public String toString(){

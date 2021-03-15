@@ -165,9 +165,18 @@ public class Legesystem {
                     System.out.println(antall);
                 }
                 else if (n.startsWith("3")){
-                    
+                    for (Lege e : legeliste){
+                        if (e.skrevetUtNarkotisk()){
+                            System.out.println(e + " har skrevet ut " + e.antallNarkotiskeResepter + " resepter av narkotiske legemidler \n");
+                        }
+                    }
+                    for (Pasient e : pasientliste){
+                        if (e.harNarkotiskResept()){
+                            System.out.println(e + " har " + e.gyldigeNarkotiskeResepter + " gyldige narkotiske resepter");
+                        }
+                    }
                 }
-            }
+            } nyInput.close();
         }
     }
 

@@ -1,6 +1,7 @@
 public class Lege implements Comparable<Lege> {
     String legeNavn;
     Lenkeliste<Resept> utskrevedeResepter;
+    int antallNarkotiskeResepter;
 
     public Lege(String legeNavn){
         this.legeNavn = legeNavn;
@@ -22,6 +23,23 @@ public class Lege implements Comparable<Lege> {
 
     public Lenkeliste<Resept> hentUtskrevedeResepter(){
         return utskrevedeResepter;
+    }
+
+    public boolean skrevetUtNarkotisk(){
+        for (Resept e : utskrevedeResepter){
+            if (e.legemiddel instanceof Narkotisk){
+                antallNarkotiskeResepter++;
+            }
+        }
+        if (antallNarkotiskeResepter > 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public int hentAntallNarkotiskeResepter(){
+        return antallNarkotiskeResepter;
     }
     
     public HvitResept skrivHvitResept(Legemiddel legemiddel, Pasient pasient, int reit) throws UlovligUtskrift{
